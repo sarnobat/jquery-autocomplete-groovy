@@ -9,11 +9,6 @@
         $.ajax({
           url: "http://ws.geonames.org/searchJSON",
           dataType: "json",
-          data: {
-            style: "full",
-            maxRows: 12,
-            name_startsWith: request.term
-          },
           success: function( data ) {
             response( $.map( data.geonames, function( item ) {
               return {
