@@ -7,10 +7,10 @@
 		$( "#city" ).autocomplete({
 			source: function( request, response ) {
 				$.ajax({
-					url: "http://ws.geonames.org/searchJSON",
+					url: "http://localhost:4444?param1=" + $("#city").val(),
 					dataType: "json",
 					success: function( data ) {
-						response( $.map( data.geonames, function( item ) {
+						response( $.map( data, function( item ) {
 							return {
 								label: item.name,
 								value: item.name
@@ -22,6 +22,9 @@
 			minLength: 2,
 		});
 	});
+	$(document).ready(function () {
+    	$("#city").focus();
+  	});
 	</script>
 </head>
 <body>
