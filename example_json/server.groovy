@@ -46,28 +46,28 @@ class MyHandler implements HttpHandler {
 	}
 
 	public void handle(HttpExchange t) throws IOException {
-		JSONArray jsonArray = new JSONArray();
+		JSONArray response = new JSONArray();
 		String query = t.getRequestURI();
-		Map<String, String> map = getQueryMap(query);
-		if(map.size() < 1) {
+		Map<String, String> queryString = getQueryMap(query);
+		if(queryString.size() < 1) {
 			throw new RuntimeException("No params");
 		}
-		String  value = map.get("param1");
+		String  value = queryString.get("param1");
 		for (String line : lines) {
 			if (!line.contains(value)) {
 				continue;
 			}
-			JSONObject json = new JSONObject();
-			json.put("name", line);
+			JSONObject pair = new JSONObject();
+			pair.put("name", line);
 			println('Request headers: ' + t.getRequestHeaders());
 			println('Request URI' + t.getRequestURI());
 			println('value: ' + value);
-			jsonArray.put(json);
+			response.put(pair);
 		}
 		t.getResponseHeaders().add("Access-Control-Allow-Origin","*");
-		t.sendResponseHeaders(200, jsonArray.toString().length());
+		t.sendResponseHeaders(200, response.toString().length());
 		OutputStream os = t.getResponseBody();
-		os.write(jsonArray.toString().getBytes());
+		os.write(response.toString().getBytes());
 		os.close();
 	}
 }
