@@ -1,0 +1,34 @@
+<head>
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+	<script>
+	$(function() { 
+		$( "#city" ).autocomplete({
+			source: function( request, response ) {
+				$.ajax({
+					url: "http://ws.geonames.org/searchJSON",
+					dataType: "json",
+					success: function( data ) {
+						response( $.map( data.geonames, function( item ) {
+							return {
+								label: item.name,
+								value: item.name
+							}
+						}));
+					}
+				});
+			},
+			minLength: 2,
+		});
+	});
+	$(document).ready(function () {
+    	$("#city").focus();
+  	});
+	</script>
+</head>
+<body>
+	<div>
+		<input id="city" />
+	</div>
+</body>
