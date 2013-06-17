@@ -45,9 +45,9 @@ class MyHandler implements HttpHandler {
 		return map;
 	}
 
-	public void handle(HttpExchange t) throws IOException {
+	public void handle(HttpExchange exchange) throws IOException {
 		JSONArray response = new JSONArray();
-		String query = t.getRequestURI();
+		String query = exchange.getRequestURI();
 		Map<String, String> queryString = getQueryMap(query);
 		if(queryString.size() < 1) {
 			throw new RuntimeException("No params");
@@ -59,14 +59,14 @@ class MyHandler implements HttpHandler {
 			}
 			JSONObject pair = new JSONObject();
 			pair.put("name", line);
-			println('Request headers: ' + t.getRequestHeaders());
-			println('Request URI' + t.getRequestURI());
+			println('Request headers: ' + exchange.getRequestHeaders());
+			println('Request URI' + exchange.getRequestURI());
 			println('value: ' + value);
 			response.put(pair);
 		}
-		t.getResponseHeaders().add("Access-Control-Allow-Origin","*");
-		t.sendResponseHeaders(200, response.toString().length());
-		OutputStream os = t.getResponseBody();
+		exchange.getResponseHeaders().add("Access-Control-Allow-Origin","*");
+		exchange.sendResponseHeaders(200, response.toString().length());
+		OutputStream os = exchange.getResponseBody();
 		os.write(response.toString().getBytes());
 		os.close();
 	}
