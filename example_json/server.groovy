@@ -43,7 +43,7 @@ class MyHandler implements HttpHandler {
 
 	public void handle(HttpExchange exchange) throws IOException {
 		JSONArray response = new JSONArray();
-		Map<String, String> queryString = getParametersMap(exchange.getRequestURI());
+		Map<String, String> queryString = getParametersMap(exchange.getRequestURI().toString());
 		if (queryString.size() < 1) {
 			throw new RuntimeException("No params");
 		}
