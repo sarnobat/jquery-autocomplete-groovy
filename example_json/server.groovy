@@ -26,10 +26,10 @@ class MyHandler implements HttpHandler {
 	private final List<String> lines;
 	public MyHandler() {
 		FileReader fileReader = new FileReader("/Users/sarnobat/mac-sync/mwk/new.mwk");
-		lines = IOUtils.readLines(fileReader);		
+		lines = IOUtils.readLines(fileReader);
 	}
-	public Map<String, String> getQueryMap(String query)  
-	{
+
+	public Map<String, String> getQueryMap(String query) {
 		String[] requestParams = Pattern.compile("^..").matcher(query).replaceAll("").split("&");
 		Map<String, String> map = new HashMap<String, String>();
 		for (String requestParam : requestParams) {
