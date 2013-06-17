@@ -1,4 +1,5 @@
 import java.io.File;
+import org.apache.commons.codec.net.*;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
@@ -47,15 +48,25 @@ class MyHandler implements HttpHandler {
 		if (queryString.size() < 1) {
 			throw new RuntimeException("No params");
 		}
-		String phrase = queryString.get("phrase");
+		String phrase = (new URLCodec()).decode(queryString.get("phrase"));
 		String[] words = phrase.split(" ");
+		System.out.println("handle() - 4 - " + words);
 		for (String dataSourceLine : lines) {
-			if (!dataSourceLine.contains(words[0])) {
-				continue;
+			boolean found = true;
+			for (String word : words) {
+				if (dataSourceLine.toLowerCase().contains(word.toLowerCase())) {
+					// keep going
+				} else {
+					found = false;
+					break;
+				}
 			}
-			JSONObject nameValueResponsePair = new JSONObject();
-			nameValueResponsePair.put("name", dataSourceLine);
-			response.put(nameValueResponsePair);
+			//System.out.println("handle() - 5");
+			if (found) {
+				JSONObject nameValueResponsePair = new JSONObject();
+				nameValueResponsePair.put("name", dataSourceLine);
+				response.put(nameValueResponsePair);
+			}
 		}
 
 		exchange.getResponseHeaders().add("Access-Control-Allow-Origin","*");
