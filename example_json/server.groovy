@@ -28,9 +28,10 @@ class MyHandler implements HttpHandler {
 	private final List<String> lines;
 	public MyHandler() {
 		FileReader fr = new FileReader("/Users/sarnobat/mac-sync/mwk/new.mwk");
-		lines = IOUtils.readLines(fr);
+		lines = IOUtils.readLines(fr);		
 	}
-	public Map<String, String> getQueryMap(String query) {
+	public Map<String, String> getQueryMap(String query)  
+	{  
 		Pattern pattern = Pattern.compile("^..");
 		Matcher matcher = pattern.matcher(query);
 		query = matcher.replaceAll("");
