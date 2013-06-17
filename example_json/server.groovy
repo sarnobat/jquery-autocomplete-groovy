@@ -22,13 +22,11 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 
-
-
 class MyHandler implements HttpHandler {
 	private final List<String> lines;
 	public MyHandler() {
-		FileReader fr = new FileReader("/Users/sarnobat/mac-sync/mwk/new.mwk");
-		lines = IOUtils.readLines(fr);		
+		FileReader fileReader = new FileReader("/Users/sarnobat/mac-sync/mwk/new.mwk");
+		lines = IOUtils.readLines(fileReader);		
 	}
 	public Map<String, String> getQueryMap(String query)  
 	{  
