@@ -50,25 +50,20 @@ class MyHandler implements HttpHandler {
 		}
 		String phrase = (new URLCodec()).decode(queryString.get("phrase"));
 		String[] words = phrase.split(" ");
-		System.out.println("handle() - 4 - " + words);
 		for (String dataSourceLine : lines) {
 			boolean found = true;
 			for (String word : words) {
-				if (dataSourceLine.toLowerCase().contains(word.toLowerCase())) {
-					// keep going
-				} else {
+				if (!dataSourceLine.toLowerCase().contains(word.toLowerCase())) {
 					found = false;
 					break;
 				}
 			}
-			//System.out.println("handle() - 5");
 			if (found) {
 				JSONObject nameValueResponsePair = new JSONObject();
 				nameValueResponsePair.put("name", dataSourceLine);
 				response.put(nameValueResponsePair);
 			}
 		}
-
 		exchange.getResponseHeaders().add("Access-Control-Allow-Origin","*");
 		exchange.sendResponseHeaders(200, response.toString().length());
 		OutputStream responseBody = exchange.getResponseBody();
