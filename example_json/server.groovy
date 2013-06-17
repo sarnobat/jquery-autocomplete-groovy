@@ -29,22 +29,22 @@ class MyHandler implements HttpHandler {
 		lines = IOUtils.readLines(fileReader);
 	}
 
-	public Map<String, String> getQueryMap(String query) {
+	public static Map<String, String> getParametersMap(String query) {
 		String[] requestParams = Pattern.compile("^..").matcher(query).replaceAll("").split("&");
-		Map<String, String> map = new HashMap<String, String>();
+		Map<String, String> requestParametersMap = new HashMap<String, String>();
 		for (String requestParam : requestParams) {
-			String name = requestParam.split("=")[0];
-			String value = requestParam.split("=")[1];
-			map.put(name, value);
+			String parameterName = requestParam.split("=")[0];
+			String parameterValue = requestParam.split("=")[1];
+			requestParametersMap.put(parameterName, parameterValue);
 		}
-		return map;
+		return requestParametersMap;
 	}
 
 	public void handle(HttpExchange exchange) throws IOException {
 		JSONArray response = new JSONArray();
 		String query = exchange.getRequestURI();
-		Map<String, String> queryString = getQueryMap(query);
-		if(queryString.size() < 1) {
+		Map<String, String> queryString = getParametersMap(query);
+		if (queryString.size() < 1) {
 			throw new RuntimeException("No params");
 		}
 		String  searchTerm = queryString.get("param1");
