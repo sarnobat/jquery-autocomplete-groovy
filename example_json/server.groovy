@@ -47,14 +47,17 @@ class MyHandler implements HttpHandler {
 		if (queryString.size() < 1) {
 			throw new RuntimeException("No params");
 		}
+		String phrase = queryString.get("phrase");
+		String[] words = phrase.split(" ");
 		for (String dataSourceLine : lines) {
-			if (!dataSourceLine.contains(queryString.get("phrase"))) {
+			if (!dataSourceLine.contains(words[0])) {
 				continue;
 			}
 			JSONObject nameValueResponsePair = new JSONObject();
 			nameValueResponsePair.put("name", dataSourceLine);
 			response.put(nameValueResponsePair);
 		}
+
 		exchange.getResponseHeaders().add("Access-Control-Allow-Origin","*");
 		exchange.sendResponseHeaders(200, response.toString().length());
 		OutputStream responseBody = exchange.getResponseBody();
