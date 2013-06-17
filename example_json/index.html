@@ -7,7 +7,7 @@
 		$( "#city" ).autocomplete({
 			source: function( request, response ) {
 				$.ajax({
-					url: "http://localhost:4444?param1=" + $("#city").val(),
+					url: "http://localhost:4444?phrase=" + $("#city").val(),
 					dataType: "json",
 					success: function( data ) {
 						response( $.map( data, function( item ) {
