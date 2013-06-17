@@ -53,12 +53,12 @@ class MyHandler implements HttpHandler {
 			throw new RuntimeException("No params");
 		}
 		String  value = queryString.get("param1");
-		for (String line : lines) {
-			if (!line.contains(value)) {
+		for (String dataSourceLine : lines) {
+			if (!dataSourceLine.contains(value)) {
 				continue;
 			}
 			JSONObject pair = new JSONObject();
-			pair.put("name", line);
+			pair.put("name", dataSourceLine);
 			println('Request headers: ' + exchange.getRequestHeaders());
 			println('Request URI' + exchange.getRequestURI());
 			println('value: ' + value);
@@ -66,9 +66,9 @@ class MyHandler implements HttpHandler {
 		}
 		exchange.getResponseHeaders().add("Access-Control-Allow-Origin","*");
 		exchange.sendResponseHeaders(200, response.toString().length());
-		OutputStream os = exchange.getResponseBody();
-		os.write(response.toString().getBytes());
-		os.close();
+		OutputStream responseBody = exchange.getResponseBody();
+		responseBody.write(response.toString().getBytes());
+		responseBody.close();
 	}
 }
 
