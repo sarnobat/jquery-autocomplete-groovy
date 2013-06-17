@@ -57,12 +57,12 @@ class MyHandler implements HttpHandler {
 			if (!dataSourceLine.contains(value)) {
 				continue;
 			}
-			JSONObject pair = new JSONObject();
-			pair.put("name", dataSourceLine);
+			JSONObject nameValueResponsePair = new JSONObject();
+			nameValueResponsePair.put("name", dataSourceLine);
 			println('Request headers: ' + exchange.getRequestHeaders());
 			println('Request URI' + exchange.getRequestURI());
 			println('value: ' + value);
-			response.put(pair);
+			response.put(nameValueResponsePair);
 		}
 		exchange.getResponseHeaders().add("Access-Control-Allow-Origin","*");
 		exchange.sendResponseHeaders(200, response.toString().length());
