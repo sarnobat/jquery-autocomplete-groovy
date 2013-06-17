@@ -50,9 +50,9 @@ class MyHandler implements HttpHandler {
 		if(queryString.size() < 1) {
 			throw new RuntimeException("No params");
 		}
-		String  value = queryString.get("param1");
+		String  searchTerm = queryString.get("param1");
 		for (String dataSourceLine : lines) {
-			if (!dataSourceLine.contains(value)) {
+			if (!dataSourceLine.contains(searchTerm)) {
 				continue;
 			}
 			JSONObject nameValueResponsePair = new JSONObject();
