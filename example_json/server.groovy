@@ -59,9 +59,6 @@ class MyHandler implements HttpHandler {
 			}
 			JSONObject nameValueResponsePair = new JSONObject();
 			nameValueResponsePair.put("name", dataSourceLine);
-			println('Request headers: ' + exchange.getRequestHeaders());
-			println('Request URI' + exchange.getRequestURI());
-			println('value: ' + value);
 			response.put(nameValueResponsePair);
 		}
 		exchange.getResponseHeaders().add("Access-Control-Allow-Origin","*");
