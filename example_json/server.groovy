@@ -24,20 +24,21 @@ import com.sun.net.httpserver.HttpServer;
 
 class MyHandler implements HttpHandler {
 	private final List<String> lines;
+
 	public MyHandler() {
 		FileReader fileReader = new FileReader("/Users/sarnobat/mac-sync/mwk/new.mwk");
 		lines = IOUtils.readLines(fileReader);
 	}
 
-	public static Map<String, String> getParametersMap(String query) {
-		String[] requestParams = Pattern.compile("^..").matcher(query).replaceAll("").split("&");
-		Map<String, String> requestParametersMap = new HashMap<String, String>();
-		for (String requestParam : requestParams) {
-			String parameterName = requestParam.split("=")[0];
-			String parameterValue = requestParam.split("=")[1];
-			requestParametersMap.put(parameterName, parameterValue);
+	public static Map<String, String> getParametersMap(String queryString) {
+		String[] queryStringParamPairs = Pattern.compile("^..").matcher(queryString).replaceAll("").split("&");
+		Map<String, String> queryStringParamsMap = new HashMap<String, String>();
+		for (String queryStringParamPair : queryStringParamPairs) {
+			String parameterName = queryStringParamPair.split("=")[0];
+			String parameterValue = queryStringParamPair.split("=")[1];
+			queryStringParamsMap.put(parameterName, parameterValue);
 		}
-		return requestParametersMap;
+		return queryStringParamsMap;
 	}
 
 	public void handle(HttpExchange exchange) throws IOException {
