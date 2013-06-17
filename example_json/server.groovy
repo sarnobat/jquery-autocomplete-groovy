@@ -30,11 +30,11 @@ class MyHandler implements HttpHandler {
 	}
 	public Map<String, String> getQueryMap(String query)  
 	{
-		String[] params = Pattern.compile("^..").matcher(query).replaceAll("").split("&");
+		String[] requestParams = Pattern.compile("^..").matcher(query).replaceAll("").split("&");
 		Map<String, String> map = new HashMap<String, String>();
-		for (String param : params) {
-			String name = param.split("=")[0];
-			String value = param.split("=")[1];
+		for (String requestParam : requestParams) {
+			String name = requestParam.split("=")[0];
+			String value = requestParam.split("=")[1];
 			map.put(name, value);
 		}
 		return map;
