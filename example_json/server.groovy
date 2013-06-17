@@ -29,10 +29,8 @@ class MyHandler implements HttpHandler {
 		lines = IOUtils.readLines(fileReader);		
 	}
 	public Map<String, String> getQueryMap(String query)  
-	{  
-		Pattern pattern = Pattern.compile("^..");
-		Matcher matcher = pattern.matcher(query);
-		query = matcher.replaceAll("");
+	{
+		query = Pattern.compile("^..").matcher(query).replaceAll("");
 		String[] params = query.split("&");
 		Map<String, String> map = new HashMap<String, String>();
 		for (String param : params) {
